@@ -1,0 +1,21 @@
+{
+  "id": "bugfix_lru",
+  "category": "bugfix",
+  "prompt": "LRUCache evicts the wrong entry. get() does not mark an entry as recently used, so a key that was just read can still be evicted as if it were the oldest. Fix src/cache.py so that reading a key (get) and updating a key (put) both count as recent use, and eviction always removes the genuinely least-recently-used key.",
+  "fail_to_pass": [
+    "test_get_marks_recently_used"
+  ],
+  "pass_to_pass": [
+    "test_basic_get_put",
+    "test_capacity_one_eviction"
+  ],
+  "test_files": [
+    "tests/test_cache.py"
+  ],
+  "expected_tools": [
+    "list_repo",
+    "read_file",
+    "write_file",
+    "run_tests"
+  ]
+}

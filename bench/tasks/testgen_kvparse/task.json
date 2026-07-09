@@ -1,0 +1,21 @@
+{
+  "id": "testgen_kvparse",
+  "category": "testgen",
+  "prompt": "parse_kv() in src/kvparse.py parses a string like 'a=1; b=2' into {'a': '1', 'b': '2'}: segments are split on ';', each 'key=value' is split on the FIRST '=', and keys/values are whitespace-stripped; empty or malformed segments are skipped. Write a thorough pytest test suite at tests/test_kvparse_generated.py that pins down this contract. Your tests must all pass against the current implementation, and should be strong enough to catch subtle regressions (e.g. splitting on every '=' instead of the first, or forgetting to strip whitespace).",
+  "fail_to_pass": [],
+  "pass_to_pass": [],
+  "test_files": [
+    "tests/test_kvparse_generated.py"
+  ],
+  "mutants": [
+    "gold/mutant_split_all.py",
+    "gold/mutant_no_strip.py"
+  ],
+  "expected_tools": [
+    "list_repo",
+    "read_file",
+    "write_file",
+    "run_tests"
+  ],
+  "mutated_file": "src/kvparse.py"
+}

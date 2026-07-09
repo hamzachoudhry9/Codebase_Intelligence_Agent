@@ -1,0 +1,23 @@
+{
+  "id": "mm_debug_lastn",
+  "category": "mm_debug",
+  "prompt": "A user reported a crash. The error is shown in the attached screenshot (issue.png). Read the traceback in the image, find the offending function in this repo, and fix the bug so the reported call works and the last_n contract holds: last_n(items, n) returns the final n items in their original order.",
+  "image": "issue.png",
+  "fail_to_pass": [
+    "test_last_two",
+    "test_last_all"
+  ],
+  "pass_to_pass": [
+    "test_zero_is_empty"
+  ],
+  "test_files": [
+    "tests/test_seq.py"
+  ],
+  "expected_tools": [
+    "list_repo",
+    "read_image",
+    "read_file",
+    "write_file",
+    "run_tests"
+  ]
+}

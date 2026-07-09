@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir \
+    streamlit==1.41.0 \
+    requests==2.32.3 \
+    python-dotenv==1.0.1
+
+COPY ui/ ./ui/
+# B8 FIX: removed "COPY .env.example .env" — that file was never read (no
+# load_dotenv in app.py). After B7 adds load_dotenv(), keeping this COPY would
+# bake stale defaults into the image and override runtime env vars from compose.
+
+EXPOSE 8501
+
+# B6 FIX: python:3.11-slim has no curl. Use Python's stdlib urllib instead.
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health')" || exit 1
+
+CMD ["streamlit", "run", "ui/app.py", \
+     "--server.port=8501", \
+     "--server.address=0.0.0.0", \
+     "--server.headless=true"]

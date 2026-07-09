@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+
+  # ── Ollama: fully local LLM runtime ──────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: cia_ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: unless-stopped
+    entrypoint: >
+      sh -c "ollama serve &
+             sleep 8 &&
+             ollama pull llama3.1:8b &&
+             wait"
+    healthcheck:
+      # B3 FIX: curl is not present in the official ollama/ollama image (GitHub
+      # issue #9781). Use "ollama list" - binary always present, queries server.
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 15
+      start_period: 180s
+
+  # ── Agent: FastAPI backend ────────────────────────────────────────────────
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cia_agent
+    ports:
+      - "8000:8000"
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - CHROMA_PERSIST_DIR=/app/chroma_db
+      - AGENT_API_KEY=${AGENT_API_KEY:-dev-key-change-in-production}
+      - DOCS_DIR=/app/docs
+      - REPO_ROOT=/app
+      - ENV=production
+    volumes:
+      - chroma_data:/app/chroma_db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # ── UI: Streamlit frontend ────────────────────────────────────────────────
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    container_name: cia_ui
+    ports:
+      - "8501:8501"
+    depends_on:
+      agent:
+        condition: service_healthy
+    environment:
+      - API_BASE_URL=http://agent:8000
+      - AGENT_API_KEY=${AGENT_API_KEY:-dev-key-change-in-production}
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  chroma_data:

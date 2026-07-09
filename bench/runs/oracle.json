@@ -1,0 +1,114 @@
+{
+  "model": "oracle",
+  "summary": {
+    "n_tasks": 5,
+    "resolve_rate": 1.0,
+    "n_resolved": 5,
+    "avg_tool_precision": 1.0,
+    "avg_tool_recall": 0.96,
+    "avg_latency_s": 1.6,
+    "avg_tokens": 0,
+    "avg_iters": 1.0,
+    "by_category": {
+      "bugfix": {
+        "n": 3,
+        "resolve_rate": 1.0,
+        "avg_latency_s": 1.3
+      },
+      "mm_debug": {
+        "n": 1,
+        "resolve_rate": 1.0,
+        "avg_latency_s": 1.0
+      },
+      "testgen": {
+        "n": 1,
+        "resolve_rate": 1.0,
+        "avg_latency_s": 3.1
+      }
+    }
+  },
+  "per_task": [
+    {
+      "id": "bugfix_backoff",
+      "category": "bugfix",
+      "resolved": true,
+      "tools_used": [
+        "list_repo",
+        "read_file",
+        "run_tests",
+        "write_file"
+      ],
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "iters": 1,
+      "tokens": 0,
+      "latency_s": 1.92
+    },
+    {
+      "id": "bugfix_lru",
+      "category": "bugfix",
+      "resolved": true,
+      "tools_used": [
+        "list_repo",
+        "read_file",
+        "run_tests",
+        "write_file"
+      ],
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "iters": 1,
+      "tokens": 0,
+      "latency_s": 0.98
+    },
+    {
+      "id": "bugfix_slug",
+      "category": "bugfix",
+      "resolved": true,
+      "tools_used": [
+        "list_repo",
+        "read_file",
+        "run_tests",
+        "write_file"
+      ],
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "iters": 1,
+      "tokens": 0,
+      "latency_s": 1.0
+    },
+    {
+      "id": "mm_debug_lastn",
+      "category": "mm_debug",
+      "resolved": true,
+      "tools_used": [
+        "list_repo",
+        "read_file",
+        "run_tests",
+        "write_file"
+      ],
+      "tool_precision": 1.0,
+      "tool_recall": 0.8,
+      "iters": 1,
+      "tokens": 0,
+      "latency_s": 1.0
+    },
+    {
+      "id": "testgen_kvparse",
+      "category": "testgen",
+      "resolved": true,
+      "tools_used": [
+        "list_repo",
+        "read_file",
+        "run_tests",
+        "write_file"
+      ],
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "iters": 1,
+      "tokens": 0,
+      "mutation_score": 1.0,
+      "tests_pass_on_original": true,
+      "latency_s": 3.1
+    }
+  ]
+}

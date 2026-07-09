@@ -1,0 +1,7 @@
+Project Name: Developer Productivity AI Agent
+Description: This agent uses LangGraph and LlamaIndex to help developers automate tasks.
+Folder Structure:
+- ingest/: Handles data loading and indexing.
+- agent/: Contains the logic for the AI graph and tools.
+- api/: Hosts the FastAPI server.
+- docs/: Stores the knowledge base files.

@@ -1,0 +1,837 @@
+{
+  "summary": {
+    "task_completion_rate": 0.86,
+    "avg_llm_faithfulness": 0.805,
+    "avg_kw_faithfulness": 0.7,
+    "avg_tool_precision": 0.105,
+    "avg_tool_recall": 0.233,
+    "avg_latency_s": 61.92,
+    "n_cases": 50,
+    "n_errors": 7,
+    "n_low_faithfulness": 2,
+    "by_category": {
+      "documentation_lookup": {
+        "n": 20,
+        "avg_llm_faithfulness": 0.785,
+        "avg_tool_precision": 0.1,
+        "avg_latency_s": 54.44
+      },
+      "code_generation_and_verification": {
+        "n": 17,
+        "avg_llm_faithfulness": 0.812,
+        "avg_tool_precision": 0.147,
+        "avg_latency_s": 65.83
+      },
+      "debugging": {
+        "n": 6,
+        "avg_llm_faithfulness": 0.85,
+        "avg_tool_precision": 0.0,
+        "avg_latency_s": 75.74
+      }
+    }
+  },
+  "per_case": [
+    {
+      "id": "tc_001",
+      "category": "documentation_lookup",
+      "query": "What is the folder structure of this project?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 22.75,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_002",
+      "category": "documentation_lookup",
+      "query": "How does the plan-and-execute loop work in this agent?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.6,
+      "tool_precision": 0.333,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 37.4,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "retrieve_memory",
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_003",
+      "category": "documentation_lookup",
+      "query": "What are the four tools this agent can use?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.333,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 31.19,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "retrieve_memory",
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_004",
+      "category": "documentation_lookup",
+      "query": "How does the session memory system work?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 56.1,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_005",
+      "category": "documentation_lookup",
+      "query": "What embedding model does this project use and why?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 55.82,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_006",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python function that adds two numbers and verify it runs correctly.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 82.93,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_007",
+      "category": "code_generation_and_verification",
+      "query": "Write and run a Python example that demonstrates list comprehension.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 101.87,
+      "plan_length": 4,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_008",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python class with an __init__ method and verify it instantiates correctly.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 71.65,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_009",
+      "category": "code_generation_and_verification",
+      "query": "Demonstrate Python dict comprehension with a working example.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 68.07,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_010",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python generator function and show it works with next().",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 68.3,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_011",
+      "category": "debugging",
+      "query": "What causes ModuleNotFoundError in Python and how do I fix it?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 103.79,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_012",
+      "category": "debugging",
+      "query": "How do I fix ChromaDB collection not found errors?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 72.26,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_013",
+      "category": "debugging",
+      "query": "Why am I getting a LangGraph KeyError inside a node and how do I fix it?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 98.97,
+      "plan_length": 4,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_014",
+      "category": "debugging",
+      "query": "How do I handle FastAPI 422 validation errors?",
+      "llm_faithfulness": 0.7,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 65.75,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_015",
+      "category": "debugging",
+      "query": "What causes ChromaDB n_results warning and how do I fix it?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 59.36,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_016",
+      "category": "documentation_lookup",
+      "query": "How does the AgentState TypedDict flow through LangGraph nodes?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 76.74,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_017",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 55.41
+    },
+    {
+      "id": "tc_018",
+      "category": "documentation_lookup",
+      "query": "How does the project handle tool safety for code execution?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.25,
+      "tool_precision": 0.333,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 19.76,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "retrieve_memory",
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_019",
+      "category": "documentation_lookup",
+      "query": "What are the three evaluation metrics used in this project?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.25,
+      "tool_precision": 0.333,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 32.43,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "retrieve_memory",
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_020",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 27.37
+    },
+    {
+      "id": "tc_021",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python function to check if a number is prime and test it on 17 and 18.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 64.64,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_022",
+      "category": "code_generation_and_verification",
+      "query": "Demonstrate Python exception handling with a try/except/finally block.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.5,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 25.84,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_023",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python dataclass example with two fields and verify it works.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 68.27,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_024",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 20.31
+    },
+    {
+      "id": "tc_025",
+      "category": "code_generation_and_verification",
+      "query": "Write and run Python code that reads a string and counts word frequencies.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.5,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 37.17,
+      "plan_length": 4,
+      "replan_count": 0,
+      "tools_called": [
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_026",
+      "category": "documentation_lookup",
+      "query": "How do I use Python generators to save memory when processing large datasets?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 66.32,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_027",
+      "category": "documentation_lookup",
+      "query": "What is the recommended way to profile Python code for performance bottlenecks?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 76.36,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_028",
+      "category": "debugging",
+      "query": "What are Python type error causes and how do I fix them?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 54.32,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_029",
+      "category": "documentation_lookup",
+      "query": "How does the FastAPI health check endpoint work?",
+      "llm_faithfulness": 0.3,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": true,
+      "latency_s": 61.56,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_030",
+      "category": "documentation_lookup",
+      "query": "What is the difference between ChromaDB PersistentClient and in-memory Client?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 63.6,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_031",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 14.12
+    },
+    {
+      "id": "tc_032",
+      "category": "code_generation_and_verification",
+      "query": "Demonstrate Python context managers with a custom class.",
+      "llm_faithfulness": 0.5,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 99.4,
+      "plan_length": 4,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_033",
+      "category": "code_generation_and_verification",
+      "query": "Write Python code to flatten a nested list and test it.",
+      "llm_faithfulness": 0.7,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 68.67,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_034",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python decorator that measures function execution time.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 70.54,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_035",
+      "category": "documentation_lookup",
+      "query": "How do I avoid repeated attribute lookups in tight Python loops for performance?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.333,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 29.08,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "retrieve_memory",
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_036",
+      "category": "documentation_lookup",
+      "query": "What similarity_top_k value should I use for a RAG retrieval system?",
+      "llm_faithfulness": 0.3,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": true,
+      "latency_s": 67.78,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_037",
+      "category": "documentation_lookup",
+      "query": "How does cosine similarity work in vector databases?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 1.0,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 64.41,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "web_search",
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_038",
+      "category": "documentation_lookup",
+      "query": "What does replan_count guard against in the agent?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.333,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 37.08,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "retrieve_memory",
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_039",
+      "category": "documentation_lookup",
+      "query": "How does the MCP server expose the agent tools?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.25,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 53.35,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_040",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python function that computes Fibonacci numbers iteratively and test it.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 73.36,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_041",
+      "category": "code_generation_and_verification",
+      "query": "Implement a Python LRU cache manually and verify it works.",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 1.0,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 29.89,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "execute_code"
+      ],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_042",
+      "category": "code_generation_and_verification",
+      "query": "Write Python code using functools.lru_cache and confirm it caches correctly.",
+      "llm_faithfulness": 0.5,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.5,
+      "tool_recall": 1.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 56.43,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [
+        "execute_code",
+        "search_docs"
+      ],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_043",
+      "category": "documentation_lookup",
+      "query": "How does the planning node decide on the number of sub-tasks?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 73.32,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_044",
+      "category": "documentation_lookup",
+      "query": "What happens when the execute_code tool times out?",
+      "llm_faithfulness": 0.8,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 72.97,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_045",
+      "category": "documentation_lookup",
+      "query": "How does the synthesis node assemble the final answer?",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.5,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 90.84,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "search_docs"
+      ]
+    },
+    {
+      "id": "tc_046",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 59.95
+    },
+    {
+      "id": "tc_047",
+      "category": "code_generation_and_verification",
+      "query": "Demonstrate Python's enumerate() function with a working example.",
+      "llm_faithfulness": 0.9,
+      "keyword_faithfulness": 0.75,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 70.63,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_048",
+      "category": "code_generation_and_verification",
+      "query": "Write a Python example using zip() to combine two lists.",
+      "llm_faithfulness": 0.5,
+      "keyword_faithfulness": 0.25,
+      "tool_precision": 0.0,
+      "tool_recall": 0.0,
+      "low_faithfulness_flag": false,
+      "latency_s": 61.44,
+      "plan_length": 3,
+      "replan_count": 0,
+      "tools_called": [],
+      "tools_expected": [
+        "execute_code"
+      ]
+    },
+    {
+      "id": "tc_049",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 30.8
+    },
+    {
+      "id": "tc_050",
+      "error": "500 Server Error: Internal Server Error for url: http://localhost:8000/query",
+      "latency_s": 2.24
+    }
+  ]
+}

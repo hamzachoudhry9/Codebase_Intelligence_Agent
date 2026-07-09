@@ -1,0 +1,28 @@
+[
+  {
+    "model": "oracle",
+    "resolve_rate": 1.0,
+    "n_resolved": 5,
+    "n_tasks": 5,
+    "tool_precision": 1.0,
+    "avg_latency_s": 1.146,
+    "avg_tokens": 0,
+    "by_category": {
+      "bugfix": {
+        "n": 3,
+        "resolve_rate": 1.0,
+        "avg_latency_s": 0.93
+      },
+      "mm_debug": {
+        "n": 1,
+        "resolve_rate": 1.0,
+        "avg_latency_s": 0.73
+      },
+      "testgen": {
+        "n": 1,
+        "resolve_rate": 1.0,
+        "avg_latency_s": 2.2
+      }
+    }
+  }
+]

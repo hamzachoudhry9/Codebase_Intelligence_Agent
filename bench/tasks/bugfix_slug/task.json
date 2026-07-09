@@ -1,0 +1,22 @@
+{
+  "id": "bugfix_slug",
+  "category": "bugfix",
+  "prompt": "slugify() is producing slugs with stray leading/trailing hyphens. For example slugify('Hello, World!') returns 'hello-world-' instead of 'hello-world', and slugify('  spaces ') returns '-spaces' instead of 'spaces'. Fix src/textutil.py so slugs never start or end with a hyphen. Do not change the behaviour of truncate_words.",
+  "fail_to_pass": [
+    "test_trailing_punct_no_dangling_hyphen",
+    "test_leading_whitespace_stripped"
+  ],
+  "pass_to_pass": [
+    "test_basic_slug",
+    "test_truncate_words_unchanged"
+  ],
+  "test_files": [
+    "tests/test_textutil.py"
+  ],
+  "expected_tools": [
+    "list_repo",
+    "read_file",
+    "write_file",
+    "run_tests"
+  ]
+}

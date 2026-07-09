@@ -1,0 +1,21 @@
+{
+  "id": "bugfix_backoff",
+  "category": "bugfix",
+  "prompt": "retry() is supposed to call a function up to `attempts` times before giving up, but it only ever tries `attempts - 1` times. A function that fails twice then succeeds is reported as failed when attempts=3. Fix the off-by-one in src/retry.py so the full attempt budget is used.",
+  "fail_to_pass": [
+    "test_succeeds_on_final_attempt"
+  ],
+  "pass_to_pass": [
+    "test_returns_immediately",
+    "test_raises_when_budget_exhausted"
+  ],
+  "test_files": [
+    "tests/test_retry.py"
+  ],
+  "expected_tools": [
+    "list_repo",
+    "read_file",
+    "write_file",
+    "run_tests"
+  ]
+}

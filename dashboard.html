@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Developer Productivity Agent — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #09090b;
+  --surface:  #111113;
+  --border:   #1f1f23;
+  --border2:  #2a2a30;
+  --text:     #e4e4e7;
+  --muted:    #71717a;
+  --accent:   #22d3a5;
+  --accent2:  #38bdf8;
+  --warn:     #fbbf24;
+  --err:      #f87171;
+  --purple:   #a78bfa;
+  --mono:     "DM Mono", monospace;
+  --sans:     "Syne", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── grid noise overlay ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* ── header ── */
+.header { border-bottom: 1px solid var(--border2); padding-bottom: 32px; margin-bottom: 40px; animation: fadeUp .6s ease both; }
+.header-tag { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.header-tag::before { content: ""; width: 20px; height: 1px; background: var(--accent); display: inline-block; }
+.title { font-size: clamp(28px, 5vw, 48px); font-weight: 800; line-height: 1.05; letter-spacing: -.02em; }
+.title em { color: var(--accent); font-style: normal; }
+.subtitle { color: var(--muted); margin-top: 10px; font-size: 13px; font-family: var(--mono); line-height: 1.6; }
+.stack-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+.pill { font-family: var(--mono); font-size: 10px; padding: 3px 10px; border: 1px solid var(--border2); border-radius: 99px; color: var(--muted); letter-spacing: .04em; }
+.pill.active { border-color: var(--accent); color: var(--accent); }
+
+/* ── section titles ── */
+.sec-title { font-size: 11px; font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.sec-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+/* ── metric cards ── */
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 40px; }
+.metric { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px; animation: fadeUp .5s ease both; transition: border-color .2s; }
+.metric:hover { border-color: var(--border2); }
+.metric-val { font-size: 32px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.metric-val.green  { color: var(--accent); }
+.metric-val.blue   { color: var(--accent2); }
+.metric-val.yellow { color: var(--warn); }
+.metric-val.purple { color: var(--purple); }
+.metric-label { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 8px; text-transform: uppercase; letter-spacing: .06em; }
+.metric-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+/* ── component grid ── */
+.components { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 40px; }
+.comp { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; animation: fadeUp .5s ease both; }
+.comp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); margin-bottom: 10px; transition: background .3s; }
+.comp.verified .comp-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.comp-name { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.comp-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.5; }
+.comp-badge { display: inline-block; font-family: var(--mono); font-size: 9px; padding: 2px 7px; border-radius: 4px; margin-top: 8px; background: #0d2e26; color: var(--accent); }
+.comp.verified { border-color: #1a3a30; }
+
+/* ── flow diagram ── */
+.flow { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 40px; overflow-x: auto; animation: fadeUp .5s ease both; }
+.flow-inner { display: flex; align-items: center; gap: 0; min-width: 600px; }
+.flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.flow-box { background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 14px; font-family: var(--mono); font-size: 11px; text-align: center; white-space: nowrap; transition: border-color .2s, color .2s; cursor: default; }
+.flow-box:hover { border-color: var(--accent); color: var(--accent); }
+.flow-box.entry { border-color: var(--accent2); color: var(--accent2); }
+.flow-box.terminal { border-color: var(--purple); color: var(--purple); }
+.flow-box.warn { border-color: var(--warn); color: var(--warn); }
+.flow-sub { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+.flow-arrow { color: var(--border2); font-size: 16px; padding: 0 4px; flex-shrink: 0; }
+.flow-loop { display: flex; flex-direction: column; align-items: center; }
+.flow-loop-label { font-family: var(--mono); font-size: 9px; color: var(--warn); margin-top: 4px; }
+
+/* ── case cards ── */
+.cases { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+.case { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; animation: fadeUp .5s ease both; }
+.case-header { padding: 16px 20px; display: flex; align-items: flex-start; gap: 14px; cursor: pointer; user-select: none; }
+.case-header:hover { background: #111115; }
+.case-num { font-family: var(--mono); font-size: 10px; color: var(--muted); min-width: 28px; padding-top: 2px; }
+.case-main { flex: 1; }
+.case-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.case-query { font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.5; }
+.case-jd { font-family: var(--mono); font-size: 9px; color: var(--accent); margin-top: 6px; }
+.case-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.case-status { font-family: var(--mono); font-size: 10px; padding: 3px 9px; border-radius: 99px; }
+.case-status.ok { background: #0d2e26; color: var(--accent); }
+.case-status.fail { background: #2e1515; color: var(--err); }
+.case-lat { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.case-body { display: none; border-top: 1px solid var(--border); padding: 16px 20px; }
+.case.open .case-body { display: block; }
+.case-body-row { margin-bottom: 14px; }
+.case-body-label { font-family: var(--mono); font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+.plan-step { font-family: var(--mono); font-size: 11px; color: var(--text); padding: 5px 10px; background: var(--bg); border-radius: 5px; margin-bottom: 4px; display: flex; gap: 8px; }
+.plan-step-num { color: var(--muted); }
+.tool-chip { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 3px 10px; border-radius: 99px; margin: 2px; }
+.tool-chip.search_docs     { background: #0d2535; color: var(--accent2); }
+.tool-chip.web_search      { background: #251d0a; color: var(--warn); }
+.tool-chip.execute_code    { background: #1a0d2e; color: var(--purple); }
+.tool-chip.retrieve_memory { background: #0d2e26; color: var(--accent); }
+.tool-chip.none            { background: var(--bg); color: var(--muted); }
+.answer-box { font-family: var(--mono); font-size: 11px; color: var(--text); background: var(--bg); border-radius: 8px; padding: 12px 14px; line-height: 1.7; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+.replan-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 3px 10px; border-radius: 99px; background: #2e1f0a; color: var(--warn); margin-bottom: 8px; }
+.chevron { color: var(--muted); transition: transform .2s; flex-shrink: 0; font-size: 12px; padding-top: 2px; }
+.case.open .chevron { transform: rotate(180deg); }
+
+/* ── eval bar chart ── */
+.eval-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.eval-label { font-family: var(--mono); font-size: 10px; color: var(--muted); width: 160px; flex-shrink: 0; }
+.eval-bar-bg { flex: 1; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.eval-bar { height: 100%; border-radius: 99px; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+.eval-pct { font-family: var(--mono); font-size: 11px; width: 42px; text-align: right; }
+
+/* ── tool usage ── */
+.tool-usage { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 40px; }
+.tool-row { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.tool-row-name { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.tool-row-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.5; }
+.tool-row-count { font-family: var(--mono); font-size: 20px; font-weight: 700; margin-top: 8px; }
+
+/* ── readme section ── */
+.readme { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
+.readme pre { font-family: var(--mono); font-size: 11px; background: var(--bg); border-radius: 8px; padding: 14px; overflow-x: auto; line-height: 1.7; color: var(--text); }
+.readme .kw  { color: var(--accent2); }
+.readme .str { color: var(--accent); }
+.readme .cm  { color: var(--muted); }
+.readme h3 { font-size: 13px; margin: 16px 0 8px; }
+
+/* ── footer ── */
+.footer { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+.footer-left { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.footer-right { display: flex; gap: 16px; }
+.footer-link { font-family: var(--mono); font-size: 10px; color: var(--muted); text-decoration: none; }
+.footer-link:hover { color: var(--accent); }
+
+/* ── animations ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.metric { animation-delay: calc(var(--i, 0) * .07s); }
+.comp   { animation-delay: calc(var(--i, 0) * .05s); }
+
+/* ── upload zone ── */
+.upload-zone { border: 1.5px dashed var(--border2); border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 28px; cursor: pointer; transition: border-color .2s; }
+.upload-zone:hover { border-color: var(--accent); }
+.upload-zone p { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.upload-zone span { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="header-tag">AI Engineering Portfolio · NVIDIA JD Alignment</div>
+  <h1 class="title">Developer Productivity<br><em>Agent</em></h1>
+  <p class="subtitle">
+    LangGraph plan-and-execute loop · ChromaDB memory · Four tools · FastMCP server · 50-case evaluation<br>
+    Maps to: "crafting, developing, and deploying AI tools and agents to improve developer productivity"
+  </p>
+  <div class="stack-pills">
+    <span class="pill active">LangGraph</span>
+    <span class="pill active">LlamaIndex</span>
+    <span class="pill active">ChromaDB</span>
+    <span class="pill active">FastMCP</span>
+    <span class="pill active">FastAPI</span>
+    <span class="pill">Groq llama-3.3-70b</span>
+    <span class="pill">BGE-small-en-v1.5</span>
+    <span class="pill">Python 3.11</span>
+  </div>
+</header>
+
+<!-- ── LOAD RESULTS ── -->
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+  <p>📂 Drop <span>eval/showcase_results.json</span> here to load live results<br>
+     <span style="color:var(--muted)">or click to browse — run <code>python showcase_demo.py</code> first</span></p>
+  <input type="file" id="fileInput" accept=".json" style="display:none">
+</div>
+
+<!-- ── METRICS ── -->
+<div class="sec-title">Live Metrics</div>
+<div class="metrics" id="metricsGrid">
+  <div class="metric" style="--i:0">
+    <div class="metric-val green" id="mSucceed">—</div>
+    <div class="metric-label">Cases Succeeded</div>
+    <div class="metric-sub" id="mSucceedSub">run showcase_demo.py</div>
+  </div>
+  <div class="metric" style="--i:1">
+    <div class="metric-val blue" id="mLatency">—</div>
+    <div class="metric-label">Avg Latency</div>
+    <div class="metric-sub">seconds per query</div>
+  </div>
+  <div class="metric" style="--i:2">
+    <div class="metric-val yellow" id="mTools">—</div>
+    <div class="metric-label">Tool Calls</div>
+    <div class="metric-sub" id="mToolsSub">total across all cases</div>
+  </div>
+  <div class="metric" style="--i:3">
+    <div class="metric-val purple" id="mReplans">—</div>
+    <div class="metric-label">Replan Events</div>
+    <div class="metric-sub">auto-recovery triggered</div>
+  </div>
+</div>
+
+<!-- ── COMPONENT STATUS ── -->
+<div class="sec-title">Component Verification</div>
+<div class="components" id="compGrid">
+  <div class="comp" style="--i:0" id="comp-Memory">
+    <div class="comp-dot"></div>
+    <div class="comp-name">Memory</div>
+    <div class="comp-desc">ChromaDB session_memory — semantic retrieval of past debugging sessions</div>
+    <div class="comp-badge">retrieve_memory tool</div>
+  </div>
+  <div class="comp" style="--i:1" id="comp-Planning">
+    <div class="comp-dot"></div>
+    <div class="comp-name">Planning</div>
+    <div class="comp-desc">LLM decomposes query into [tool_name]-prefixed sub-tasks (2–5 steps)</div>
+    <div class="comp-badge">planning_node</div>
+  </div>
+  <div class="comp" style="--i:2" id="comp-Tool Use">
+    <div class="comp-dot"></div>
+    <div class="comp-name">Tool Use</div>
+    <div class="comp-desc">search_docs · web_search · execute_code · retrieve_memory</div>
+    <div class="comp-badge">execution_node</div>
+  </div>
+  <div class="comp" style="--i:3" id="comp-Replanning">
+    <div class="comp-dot"></div>
+    <div class="comp-name">Replanning</div>
+    <div class="comp-desc">Automatic step recovery on failure — max 2 replans per query</div>
+    <div class="comp-badge">replan_node</div>
+  </div>
+  <div class="comp" style="--i:4" id="comp-Synthesis">
+    <div class="comp-dot"></div>
+    <div class="comp-name">Synthesis</div>
+    <div class="comp-desc">Structured answer assembled from all tool outputs</div>
+    <div class="comp-badge">synthesis_node</div>
+  </div>
+</div>
+
+<!-- ── AGENT FLOW ── -->
+<div class="sec-title">Graph Architecture</div>
+<div class="flow">
+  <div class="flow-inner">
+    <div class="flow-node">
+      <div class="flow-box entry">memory_retrieval</div>
+      <div class="flow-sub">ChromaDB lookup</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-box">planning</div>
+      <div class="flow-sub">decompose query</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-box">execution</div>
+      <div class="flow-sub">call tool</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-loop">
+      <div class="flow-box warn">replan?</div>
+      <div class="flow-loop-label">↩ on failure (max 2×)</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-box">synthesis</div>
+      <div class="flow-sub">assemble answer</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <div class="flow-box terminal">save_memory</div>
+      <div class="flow-sub">persist session</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOOL USAGE ── -->
+<div class="sec-title">Tool Registry</div>
+<div class="tool-usage">
+  <div class="tool-row">
+    <div class="tool-row-name" style="color:var(--accent2)">search_docs</div>
+    <div class="tool-row-desc">LlamaIndex semantic search over ChromaDB project_docs.<br>BGE-small-en-v1.5 embeddings, 512-token chunks.</div>
+    <div class="tool-row-count tool-chip search_docs" id="cnt-search_docs">— calls</div>
+  </div>
+  <div class="tool-row">
+    <div class="tool-row-name" style="color:var(--warn)">web_search</div>
+    <div class="tool-row-desc">DuckDuckGo live search with 3-attempt retry + backoff.<br>External docs, known bugs, Stack Overflow.</div>
+    <div class="tool-row-count tool-chip web_search" id="cnt-web_search">— calls</div>
+  </div>
+  <div class="tool-row">
+    <div class="tool-row-name" style="color:var(--purple)">execute_code</div>
+    <div class="tool-row-desc">Sandboxed Python subprocess, 10s timeout.<br>Blocks os · sys · subprocess · shutil · eval · exec.</div>
+    <div class="tool-row-count tool-chip execute_code" id="cnt-execute_code">— calls</div>
+  </div>
+  <div class="tool-row">
+    <div class="tool-row-name" style="color:var(--accent)">retrieve_memory</div>
+    <div class="tool-row-desc">ChromaDB session_memory semantic lookup.<br>Past session summaries, compact (≤400 chars).</div>
+    <div class="tool-row-count tool-chip retrieve_memory" id="cnt-retrieve_memory">— calls</div>
+  </div>
+</div>
+
+<!-- ── CASE RESULTS ── -->
+<div class="sec-title">Showcase Cases</div>
+<div class="cases" id="casesContainer">
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:20px;text-align:center">
+    Load eval/showcase_results.json to see case-by-case results
+  </div>
+</div>
+
+<!-- ── RESUME BULLETS ── -->
+<div class="sec-title">Resume Bullets</div>
+<div class="readme">
+  <h3 style="color:var(--muted);font-size:11px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em">
+    Copy these into your resume — fill [X]% from eval/showcase_results.json
+  </h3>
+  <pre id="resumeBullets">Developer Productivity Agent | Python · LangGraph · LlamaIndex · ChromaDB · MCP · FastAPI · Groq
+
+▸ Built a LangGraph-orchestrated autonomous developer agent using a plan-and-execute
+  loop with automatic replanning: a planning node decomposes each query into 2–5
+  [tool_name]-prefixed sub-tasks; an execution node calls the correct tool directly
+  by parsing the prefix (avoiding LLM tool-calling API limitations); a replan node
+  revises remaining steps on failure; and a synthesis node assembles a structured
+  final answer — all persisted to ChromaDB session memory for future retrieval.
+
+▸ Implemented four registered tools: LlamaIndex semantic search over a ChromaDB
+  vector index of project documentation (BGE-small-en-v1.5 embeddings, 512-token
+  chunks), DuckDuckGo live web search with retry/backoff, a sandboxed Python
+  subprocess executor (10s timeout, dangerous import blocklist), and a ChromaDB
+  session memory retriever that embeds past debugging sessions for semantic lookup.
+
+▸ Exposed all four tools as an MCP-compatible server using FastMCP, served the
+  agent via FastAPI POST /query, and evaluated across 50 annotated developer queries
+  spanning documentation lookup, code generation, debugging, and multi-step workflows
+  — achieving [X]% task completion, [X]% avg faithfulness, [X]% tool precision.</pre>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div class="footer-left" id="footerTs">No results loaded · run python showcase_demo.py</div>
+  <div class="footer-right">
+    <a class="footer-link" href="http://localhost:8000/docs" target="_blank">API Swagger →</a>
+    <a class="footer-link" href="http://localhost:8000/health" target="_blank">Health →</a>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── drag-and-drop ──
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--accent)'; });
+zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.style.borderColor = '';
+  const file = e.dataTransfer.files[0];
+  if (file) loadFile(file);
+});
+document.getElementById('fileInput').addEventListener('change', e => {
+  if (e.target.files[0]) loadFile(e.target.files[0]);
+});
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      renderAll(data);
+      zone.style.display = 'none';
+    } catch(err) {
+      alert('Invalid JSON: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── try auto-load from same directory ──
+fetch('eval/showcase_results.json')
+  .then(r => r.ok ? r.json() : null)
+  .then(data => { if (data) { renderAll(data); zone.style.display = 'none'; } })
+  .catch(() => {});
+
+function renderAll(data) {
+  const s = data.summary;
+
+  // Metrics
+  document.getElementById('mSucceed').textContent = s.succeeded + '/' + s.total_cases;
+  document.getElementById('mSucceedSub').textContent = 'out of ' + s.total_cases + ' showcase queries';
+  document.getElementById('mLatency').textContent = s.avg_latency_s + 's';
+  document.getElementById('mTools').textContent = s.total_tool_calls;
+  document.getElementById('mToolsSub').textContent = 'across ' + s.total_cases + ' cases';
+  document.getElementById('mReplans').textContent = s.replan_events;
+
+  // Components
+  const comps = s.components_verified || {};
+  Object.entries(comps).forEach(([name, verified]) => {
+    const el = document.getElementById('comp-' + name);
+    if (el && verified) el.classList.add('verified');
+  });
+
+  // Tool counts
+  const toolCounts = {};
+  (data.cases || []).forEach(c => {
+    (c.tool_calls || []).forEach(tc => {
+      toolCounts[tc.tool] = (toolCounts[tc.tool] || 0) + 1;
+    });
+  });
+  ['search_docs','web_search','execute_code','retrieve_memory'].forEach(t => {
+    const el = document.getElementById('cnt-' + t);
+    if (el) el.textContent = (toolCounts[t] || 0) + ' calls';
+  });
+
+  // Cases
+  const container = document.getElementById('casesContainer');
+  container.innerHTML = '';
+  (data.cases || []).forEach((c, i) => {
+    const ok = c.success !== false;
+    const tools = [...new Set((c.tool_calls||[]).map(t=>t.tool))];
+    const replanned = c.replan_count > 0;
+
+    const div = document.createElement('div');
+    div.className = 'case';
+    div.innerHTML = `
+      <div class="case-header" onclick="toggleCase(this.closest('.case'))">
+        <div class="case-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="case-main">
+          <div class="case-title">${esc(c.case_title || 'Query ' + (i+1))}</div>
+          <div class="case-query">${esc(c.query)}</div>
+          <div class="case-jd">${esc(c.jd_mapping || '')}</div>
+        </div>
+        <div class="case-meta">
+          <span class="case-status ${ok?'ok':'fail'}">${ok?'✓ OK':'✗ FAIL'}</span>
+          <span class="case-lat">${c.latency_s}s</span>
+          ${replanned ? '<span style="font-family:var(--mono);font-size:9px;color:var(--warn)">↩ replanned</span>' : ''}
+        </div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="case-body">
+        ${replanned ? `<div class="replan-badge">↩ Replanning triggered — agent recovered automatically</div>` : ''}
+        ${renderMemory(c)}
+        ${renderPlan(c)}
+        ${renderTools(c)}
+        ${renderAnswer(c)}
+      </div>`;
+    container.appendChild(div);
+  });
+
+  // Footer
+  const ts = new Date(data.timestamp);
+  document.getElementById('footerTs').textContent =
+    'Results from ' + ts.toLocaleDateString() + ' ' + ts.toLocaleTimeString();
+}
+
+function renderMemory(c) {
+  if (!c.memory_retrieved) return `
+    <div class="case-body-row">
+      <div class="case-body-label">Memory</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted)">No past session retrieved (expected on first run)</div>
+    </div>`;
+  return `
+    <div class="case-body-row">
+      <div class="case-body-label">Memory — Past Session Retrieved</div>
+      <div class="answer-box" style="color:var(--accent)">${esc(c.past_context_preview)}</div>
+    </div>`;
+}
+
+function renderPlan(c) {
+  const steps = (c.plan || []).map((s,i) => 
+    `<div class="plan-step"><span class="plan-step-num">${i+1}.</span>${esc(s)}</div>`
+  ).join('');
+  return `<div class="case-body-row"><div class="case-body-label">Plan (${c.plan?.length||0} steps)</div>${steps}</div>`;
+}
+
+function renderTools(c) {
+  const chips = (c.tool_calls||[]).map(tc => {
+    const sym = tc.success ? '✓' : '✗';
+    const col = tc.success ? '' : 'color:var(--err)';
+    return `<span class="tool-chip ${tc.tool}" style="${col}">${sym} ${esc(tc.tool)}</span>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 4px 6px">${esc(tc.result_preview)}</div>`;
+  }).join('');
+  return `<div class="case-body-row"><div class="case-body-label">Tool Calls</div>${chips}</div>`;
+}
+
+function renderAnswer(c) {
+  if (!c.final_answer) return '';
+  return `<div class="case-body-row">
+    <div class="case-body-label">Final Answer</div>
+    <div class="answer-box">${esc(c.final_answer)}</div>
+  </div>`;
+}
+
+function toggleCase(el) { el.classList.toggle('open'); }
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>

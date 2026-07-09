@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables — NEVER commit
+.env
+.env.*
+!.env.example
+
+# ChromaDB vector index — rebuild with: python ingest/build_index.py
+chroma_db/
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+structlog_*.json
+
+# Data cache (Stack Overflow scrape cache — large, rebuildable)
+data/stackoverflow_qa.json
+
+# Docker volumes
+ollama_data/

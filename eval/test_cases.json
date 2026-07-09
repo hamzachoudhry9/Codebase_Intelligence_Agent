@@ -1,0 +1,402 @@
+[
+  {
+    "id": "tc_001",
+    "query": "What is the folder structure of this project?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["ingest", "agent", "memory", "mcp_server", "api", "eval"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_002",
+    "query": "How does the plan-and-execute loop work in this agent?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["planning", "execution", "synthesis", "replan", "node"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_003",
+    "query": "What are the four tools this agent can use?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["search_docs", "web_search", "execute_code", "retrieve_memory"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_004",
+    "query": "How does the session memory system work?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["session_memory", "ChromaDB", "embedding", "summary"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_005",
+    "query": "What embedding model does this project use and why?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["BGE", "bge-small", "HuggingFace", "embedding"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_006",
+    "query": "Write a Python function that adds two numbers and verify it runs correctly.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["def", "return", "stdout", "print"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_007",
+    "query": "Write and run a Python example that demonstrates list comprehension.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["for", "in", "range", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_008",
+    "query": "Write a Python class with an __init__ method and verify it instantiates correctly.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["class", "__init__", "self", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_009",
+    "query": "Demonstrate Python dict comprehension with a working example.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["dict", "for", "in", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_010",
+    "query": "Write a Python generator function and show it works with next().",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["yield", "generator", "next", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_011",
+    "query": "What causes ModuleNotFoundError in Python and how do I fix it?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["ModuleNotFoundError", "install", "virtual environment", "sys.path"],
+    "category": "debugging"
+  },
+  {
+    "id": "tc_012",
+    "query": "How do I fix ChromaDB collection not found errors?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["get_or_create_collection", "ChromaDB", "collection"],
+    "category": "debugging"
+  },
+  {
+    "id": "tc_013",
+    "query": "Why am I getting a LangGraph KeyError inside a node and how do I fix it?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["initial_state", "AgentState", "KeyError", "keys"],
+    "category": "debugging"
+  },
+  {
+    "id": "tc_014",
+    "query": "How do I handle FastAPI 422 validation errors?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["422", "Pydantic", "validation", "detail"],
+    "category": "debugging"
+  },
+  {
+    "id": "tc_015",
+    "query": "What causes ChromaDB n_results warning and how do I fix it?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["n_results", "count", "min", "collection"],
+    "category": "debugging"
+  },
+  {
+    "id": "tc_016",
+    "query": "How does the AgentState TypedDict flow through LangGraph nodes?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["TypedDict", "AgentState", "node", "partial dict"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_017",
+    "query": "Explain the should_replan routing function and when it triggers replanning.",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["replan", "success", "synthesize", "execute"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_018",
+    "query": "How does the project handle tool safety for code execution?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["blocked", "subprocess", "timeout", "sandbox"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_019",
+    "query": "What are the three evaluation metrics used in this project?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["task completion", "faithfulness", "tool selection", "precision"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_020",
+    "query": "How does chunking work in the document ingestion pipeline?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["SentenceSplitter", "512", "64", "chunk"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_021",
+    "query": "Write a Python function to check if a number is prime and test it on 17 and 18.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["def", "prime", "True", "False"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_022",
+    "query": "Demonstrate Python exception handling with a try/except/finally block.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["try", "except", "finally", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_023",
+    "query": "Write a Python dataclass example with two fields and verify it works.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["dataclass", "field", "__init__", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_024",
+    "query": "Implement a simple stack data structure in Python and run it.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["push", "pop", "stack", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_025",
+    "query": "Write and run Python code that reads a string and counts word frequencies.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["split", "count", "dict", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_026",
+    "query": "How do I use Python generators to save memory when processing large datasets?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["generator", "yield", "memory", "large"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_027",
+    "query": "What is the recommended way to profile Python code for performance bottlenecks?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["cProfile", "pstats", "cumulative", "profile"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_028",
+    "query": "What are Python type error causes and how do I fix them?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["TypeError", "isinstance", "str", "bytes"],
+    "category": "debugging"
+  },
+  {
+    "id": "tc_029",
+    "query": "How does the FastAPI health check endpoint work?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["health", "status", "ok", "GET"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_030",
+    "query": "What is the difference between ChromaDB PersistentClient and in-memory Client?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["PersistentClient", "in-memory", "restart", "path"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_031",
+    "query": "Write and run a binary search implementation in Python.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["def", "mid", "low", "high"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_032",
+    "query": "Demonstrate Python context managers with a custom class.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["__enter__", "__exit__", "with", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_033",
+    "query": "Write Python code to flatten a nested list and test it.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["flatten", "nested", "list", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_034",
+    "query": "Write a Python decorator that measures function execution time.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["decorator", "time", "wrapper", "functools"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_035",
+    "query": "How do I avoid repeated attribute lookups in tight Python loops for performance?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["attribute", "cache", "append", "loop"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_036",
+    "query": "What similarity_top_k value should I use for a RAG retrieval system?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["top_k", "recall", "context", "4"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_037",
+    "query": "How does cosine similarity work in vector databases?",
+    "expected_tools": ["search_docs", "web_search"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["cosine", "similarity", "vector", "embedding"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_038",
+    "query": "What does replan_count guard against in the agent?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["replan_count", "infinite", "loop", "2"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_039",
+    "query": "How does the MCP server expose the agent tools?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["FastMCP", "mcp_server", "stdio", "tool"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_040",
+    "query": "Write a Python function that computes Fibonacci numbers iteratively and test it.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["fibonacci", "def", "return", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_041",
+    "query": "Implement a Python LRU cache manually and verify it works.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["cache", "lru", "dict", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_042",
+    "query": "Write Python code using functools.lru_cache and confirm it caches correctly.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["lru_cache", "functools", "cache", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_043",
+    "query": "How does the planning node decide on the number of sub-tasks?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["planning", "2", "5", "sub-task"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_044",
+    "query": "What happens when the execute_code tool times out?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["timeout", "10", "seconds", "TimeoutExpired"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_045",
+    "query": "How does the synthesis node assemble the final answer?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["synthesis", "tool_outputs", "structured", "answer"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_046",
+    "query": "Write a Python function to merge two sorted lists and verify it.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["merge", "sorted", "list", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_047",
+    "query": "Demonstrate Python's enumerate() function with a working example.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["enumerate", "index", "for", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_048",
+    "query": "Write a Python example using zip() to combine two lists.",
+    "expected_tools": ["execute_code"],
+    "requires_code_execution": true,
+    "ground_truth_keywords": ["zip", "list", "for", "stdout"],
+    "category": "code_generation_and_verification"
+  },
+  {
+    "id": "tc_049",
+    "query": "How does the keyword faithfulness score differ from a true hallucination detector?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["faithfulness", "keyword", "proxy", "hallucination"],
+    "category": "documentation_lookup"
+  },
+  {
+    "id": "tc_050",
+    "query": "What is the purpose of the save_memory node in the LangGraph graph?",
+    "expected_tools": ["search_docs"],
+    "requires_code_execution": false,
+    "ground_truth_keywords": ["save_memory", "persist", "session", "ChromaDB"],
+    "category": "documentation_lookup"
+  }
+]

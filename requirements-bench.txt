@@ -1,0 +1,15 @@
+# Extra dependencies for the execution-based benchmark, actor agent, and
+# multimodal vision. The core app already pins langgraph/langchain/chromadb
+# in requirements.txt; these are the additions.
+
+pytest==8.3.3            # execution-based test runner (fail->pass / pass->pass)
+Pillow==10.4.0           # render/inspect screenshots for multimodal tasks
+
+# --- optional: multimodal vision ---
+# A local vision model gives the best results:
+#     ollama pull llava
+# Then `ollama` (the Python client) lets vision.py call it:
+ollama==0.3.3            # optional; vision falls back to OCR without it
+pytesseract==0.3.13      # optional OCR fallback; also needs the tesseract binary:
+                         #   macOS:  brew install tesseract
+                         #   ubuntu: sudo apt-get install tesseract-ocr
