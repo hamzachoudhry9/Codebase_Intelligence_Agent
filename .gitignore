@@ -51,3 +51,5 @@ data/stackoverflow_qa.json
 
 # Docker volumes
 ollama_data/
+
+.cursor/

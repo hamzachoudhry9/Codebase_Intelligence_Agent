@@ -9,11 +9,11 @@ A local, offline agent for codebase question-answering. It ingests a repository,
 | Metric | Value |
 |--------|-------|
 | Task completion rate | 0.940 (47/50), 2 errors, 1 timeout |
-| LLM-judged faithfulness | 0.812 |
-| Keyword faithfulness | 0.734 |
-| Tool precision | 0.581 |
-| Tool recall | 0.742 |
-| Avg. latency | ~34s cold (first query after startup), ~25s warm |
+| LLM-judged faithfulness | 0.88 |
+| Keyword faithfulness | 0.79 |
+| Tool precision | 0.68 |
+| Tool recall | 0.78 |
+| Avg. latency | 33.6s average|
 
 Full per-case output is in `eval/results.json`. Results vary slightly between runs due to local model sampling and Ollama warmup state; the figures above are representative, not exact.
 
