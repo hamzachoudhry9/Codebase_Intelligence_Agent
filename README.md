@@ -48,8 +48,14 @@ The fast-path router recognized this as a simple lookup, skipped full planning, 
 
 The answer correctly cites `agent/nodes.py` (lines 82-148) and accurately describes the function's return keys and internal logic.
 
-Evaluation results:
+### Evaluation results:
+### Terminal Output:
+<img width="1048" height="17" alt="image" src="https://github.com/user-attachments/assets/388a6297-dc53-4fca-bba6-b1c8c9375156" />
 <img width="753" height="218" alt="image" src="https://github.com/user-attachments/assets/94f12209-f55a-45d5-885c-6986f729839d" />
+
+
+<img width="782" height="208" alt="image" src="https://github.com/user-attachments/assets/4e27d11b-c324-45cd-b946-228fc84da425" />
+
 
 The complete evaluation results and Full per-case output is in `eval/results.json`.
 
