@@ -108,6 +108,19 @@ An entry router (`agent/router.py`) precedes the graph. Simple lookups ("what do
 | `execute_code` | Executes a Python snippet to verify a hypothesis | `subprocess.run`, 10s timeout, restricted import list |
 | `retrieve_memory` | Retrieves related past debugging sessions | ChromaDB `session_memory` collection |
 
+## Example
+
+Query against this repo's own codebase, via the Streamlit UI:
+
+<img src="docs/screenshots/query-example.png" width="700" alt="Streamlit UI showing a query, execution plan, and step/tool/replan counters">
+
+The fast-path router recognized this as a simple lookup, skipped full planning, and answered in ~30s:
+
+<img src="docs/screenshots/answer-example.png" width="700" alt="Agent answer citing agent/nodes.py lines 82-148 with a code example">
+
+The answer correctly cites `agent/nodes.py` (lines 82-148) and accurately describes the function's return keys and internal logic.
+
+
 ### Code-aware chunking
 
 Source files are chunked at the function/class boundary using [tree-sitter](https://tree-sitter.github.io/tree-sitter/), with a regex-based fallback for languages without a parser configured. Each chunk includes metadata:
