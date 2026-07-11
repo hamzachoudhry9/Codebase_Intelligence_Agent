@@ -36,6 +36,23 @@ The agent answers questions such as "where is `planning_node` defined" or "why d
 | IDE integration | None | MCP server |
 | Data locality | Leaves the machine | Stays local |
 
+## Example
+
+Query against this repo's own codebase, via the Streamlit UI:
+
+<img src="docs/screenshots/query-example.png" width="700" alt="Streamlit UI showing a query, execution plan, and step/tool/replan counters">
+
+The fast-path router recognized this as a simple lookup, skipped full planning, and answered in ~30s:
+
+<img src="docs/screenshots/answer-example.png" width="700" alt="Agent answer citing agent/nodes.py lines 82-148 with a code example">
+
+The answer correctly cites `agent/nodes.py` (lines 82-148) and accurately describes the function's return keys and internal logic.
+
+Evaluation results:
+<img width="753" height="218" alt="image" src="https://github.com/user-attachments/assets/94f12209-f55a-45d5-885c-6986f729839d" />
+
+The complete evaluation results and Full per-case output is in `eval/results.json`.
+
 ## Architecture
 
 ```
@@ -107,18 +124,6 @@ An entry router (`agent/router.py`) precedes the graph. Simple lookups ("what do
 | `web_search` | External documentation and Stack Overflow lookup | DuckDuckGo search with retry on rate limiting |
 | `execute_code` | Executes a Python snippet to verify a hypothesis | `subprocess.run`, 10s timeout, restricted import list |
 | `retrieve_memory` | Retrieves related past debugging sessions | ChromaDB `session_memory` collection |
-
-## Example
-
-Query against this repo's own codebase, via the Streamlit UI:
-
-<img src="docs/screenshots/query-example.png" width="700" alt="Streamlit UI showing a query, execution plan, and step/tool/replan counters">
-
-The fast-path router recognized this as a simple lookup, skipped full planning, and answered in ~30s:
-
-<img src="docs/screenshots/answer-example.png" width="700" alt="Agent answer citing agent/nodes.py lines 82-148 with a code example">
-
-The answer correctly cites `agent/nodes.py` (lines 82-148) and accurately describes the function's return keys and internal logic.
 
 
 ### Code-aware chunking
