@@ -9,6 +9,8 @@ llama-index==0.11.20
 llama-index-vector-stores-chroma==0.2.0
 llama-index-embeddings-huggingface==0.3.1
 sentence-transformers==3.3.1
+tokenizers>=0.22.0,<=0.23.0
+huggingface-hub>=0.34.0,<1.0
 
 # ── Vector database ────────────────────────────────────────────────────────
 chromadb==0.5.18
@@ -27,7 +29,7 @@ pydantic==2.9.2
 streamlit==1.41.0
 
 # ── MCP server ─────────────────────────────────────────────────────────────
-mcp==1.1.0
+mcp>=1.2.0
 
 # ── Observability ──────────────────────────────────────────────────────────
 structlog==24.4.0
