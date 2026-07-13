@@ -12,7 +12,7 @@ A local, offline agent for codebase question-answering. It ingests a repository,
 | Task completion rate | 1.000 (50/50), 0 errors, 0 timeouts |
 | LLM-judged faithfulness | 0.886 |
 | Keyword faithfulness | 0.783 |
-| Tool precision | 0.580 |
+| Tool precision | 0.680 |
 | Tool recall | 0.670 |
 | Avg. latency | 25.85s |
 
