@@ -2,18 +2,20 @@
 
 A local, offline agent for codebase question-answering. It ingests a repository, chunks it at the function/class level, and answers natural-language questions about the code using a locally hosted LLM. No cloud inference, no source code leaves the machine.
 
+
 ## Evaluation summary
 
 50 test cases across 3 categories (`eval/test_cases.json`):
 
 | Metric | Value |
 |--------|-------|
-| Task completion rate | 0.940 (47/50), 2 errors, 1 timeout |
-| LLM-judged faithfulness | 0.88 |
-| Keyword faithfulness | 0.79 |
-| Tool precision | 0.68 |
-| Tool recall | 0.78 |
-| Avg. latency | 33.6s average|
+| Task completion rate | 1.000 (50/50), 0 errors, 0 timeouts |
+| LLM-judged faithfulness | 0.886 |
+| Keyword faithfulness | 0.783 |
+| Tool precision | 0.580 |
+| Tool recall | 0.670 |
+| Avg. latency | 25.85s |
+
 
 Full per-case output is in `eval/results.json`. Results vary slightly between runs due to local model sampling and Ollama warmup state; the figures above are representative, not exact.
 
@@ -430,26 +432,27 @@ python eval/evaluator.py --cases eval/test_cases.json --out eval/results.json
 python eval/evaluator.py --no-llm-judge
 ```
 
-Sample output:
+Sample output, from the latest full run:
 ```
 === Evaluation Summary ===
-task_completion_rate : 0.940   (47/50)
-avg_llm_faithfulness : 0.812
-avg_kw_faithfulness  : 0.734
-avg_tool_precision   : 0.581
-avg_tool_recall      : 0.742
-avg_latency_s        : 24.6
-n_errors             : 2
-n_timeouts           : 1
-n_low_faithfulness   : 4
+task_completion_rate : 1.000   (50/50)
+avg_llm_faithfulness : 0.886
+avg_kw_faithfulness  : 0.783
+avg_tool_precision   : 0.580
+avg_tool_recall      : 0.670
+avg_latency_s        : 25.85
+n_errors             : 0
+n_timeouts           : 0
+n_low_faithfulness   : 0
 
 By category:
-  documentation_lookup             n=23  faithfulness=0.84  precision=0.69
-  code_generation_and_verification n=18  faithfulness=0.77  precision=0.26
-  debugging                        n=6   faithfulness=0.87  precision=0.83
+  documentation_lookup             n=24  faithfulness=0.892  precision=0.958
+  code_generation_and_verification n=20  faithfulness=0.880  precision=0.100
+  debugging                        n=6   faithfulness=0.883  precision=0.667
 ```
 
 Tool precision is lowest on the code-generation category: the planner frequently invokes `search_docs` even when the answer does not require it. This is a known limitation rather than a scoring artifact. The complexity router improves latency on simple lookups but does not fully address this on multi-step generation tasks.
+
 
 ## Indexing a different codebase
 
